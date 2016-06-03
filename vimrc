@@ -2,49 +2,91 @@ set nu
 syntax on
 set nocompatible
 set laststatus=2
+set hlsearch
+set incsearch
+set showmatch
+set showmode
+set ruler
+set smartindent
+set ai
+
 filetype off
 
 " Color setting
 colorscheme desert
+" change the comment color to lightblue
+highlight comment ctermfg=lightblue guifg=lightblue
 
 " Format settings
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\[TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\[LEN=%L]
-
+" set statusline=[%F]%m%r%h%w\ [POS=%04l,%04v]\ [%p%%]\ [LEN=%L]\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]
 " Settings for cscope
-set csprg=/usr/local/bin/cscope
+" set csprg=/usr/local/bin/cscope
+
+if has("cscope")  
+    " set csprg=/usr/local/bin/cscope  
+    set csto=0  
+    set cst  
+    set csverb  
+    set cspc=3  
+    "add any database in current dir  
+    if filereadable("cscope.out")  
+        silent cs add cscope.out  
+    "else search cscope.out elsewhere  
+    else  
+       let cscope_file=findfile("cscope.out", ".;")  
+       let cscope_pre=matchstr(cscope_file, ".*/")  
+       if !empty(cscope_file) && filereadable(cscope_file)  
+           exe "cs add" cscope_file cscope_pre  
+       endif        
+     endif  
+endif  
+
 set csto=0
 set cst
-nmap <C-[>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-[>i :cs find i ^<C-R>=expand("<cfile>")<CR><CR>
-nmap <C-[>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-[>i :scs find i ^<C-R>=expand("<cfile>")<CR><CR>
+nmap <C-[>d :scs find d <C-R>=expand("<cword>")<CR><CR>
 
 " Using 'CTRL-\' then a search type makes the vim window
 " split horizontally, with search result displayed in
 " the new window.
-nmap <C-\>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-\>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-\>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+nmap <C-space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+
 
 set foldmethod=syntax
 set foldlevel=99
 
 set tabstop=4
-set tags=tags
+set autochdir
+set tags=tags;
+set mouse=a
 
 " cs add cscope.out
 
-au BufWinLeave * mkview
-au BufWinEnter * silent loadview
+au BufWinLeave *.* mkview
+au BufWinEnter *.* silent loadview
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
