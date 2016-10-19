@@ -6,6 +6,8 @@ set hlsearch
 set incsearch
 set showmatch
 set showmode
+set showcmd
+set nobackup
 set ruler
 set smartindent
 set ai
@@ -76,9 +78,10 @@ nmap <C-space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
 
 set foldmethod=syntax
+" set foldmethod=manual
 set foldlevel=99
 
-set tabstop=4
+set tabstop=8
 set autochdir
 set tags=tags;
 set mouse=a
@@ -93,12 +96,16 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'taglist.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'TabBar'
 call vundle#end()
 filetype plugin indent on
 
 " :map to show key map
 
-set showcmd
 let mapleader='\'
 
 if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
@@ -116,3 +123,18 @@ if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
 	nnoremap <silent> <leader>gg :SignifyToggle<CR>
 endif
 
+" let Tlist_Auto_Open=1
+map <silent> <leader>tl :TlistToogle<cr>:wincmd j<cr>
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Use_Right_Window=1
+
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * wincmd p
+map <silent> <leader>nt :NERDTreeToggle<cr>:wincmd p<cr>
+
+let Tb_MaxSize = 2
+let Tb_TabWrap = 1
+map <silent> <leader>tb :TbToggle<cr>
+
+" add path for your src file dir
+set path+=~/srcdir/**
