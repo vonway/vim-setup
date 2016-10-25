@@ -29,7 +29,7 @@ if has("cscope")
     " set csprg=/usr/local/bin/cscope  
     set csto=0  
     set cst  
-    set csverb  
+    set nocsverb  
     set cspc=3  
     "add any database in current dir  
     if filereadable("cscope.out")  
@@ -40,8 +40,10 @@ if has("cscope")
        let cscope_pre=matchstr(cscope_file, ".*/")  
        if !empty(cscope_file) && filereadable(cscope_file)  
            exe "cs add" cscope_file cscope_pre  
-       endif        
+       endif
+       silent cs add ~/cscope.out   
      endif  
+    set csverb
 endif  
 
 set csto=0
@@ -124,7 +126,7 @@ if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
 endif
 
 " let Tlist_Auto_Open=1
-map <silent> <leader>tl :TlistToogle<cr>:wincmd j<cr>
+map <silent> <leader>tl :Tlist<cr>:wincmd j<cr>
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 
@@ -137,4 +139,13 @@ let Tb_TabWrap = 1
 map <silent> <leader>tb :TbToggle<cr>
 
 " add path for your src file dir
-set path+=~/srcdir/**
+set path+=~/src
+
+set hidden
+
+hi cursorline cterm=bold
+
+map <silent> <leader>[ :set mouse=a<cr>
+map <silent> <leader>] :set mouse=""<cr>
+
+
