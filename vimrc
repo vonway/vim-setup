@@ -83,7 +83,7 @@ set foldmethod=syntax
 " set foldmethod=manual
 set foldlevel=99
 
-set tabstop=8
+set tabstop=4
 set autochdir
 set tags=tags;
 set mouse=a
