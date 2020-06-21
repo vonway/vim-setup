@@ -1,4 +1,5 @@
 set nu
+set relativenumber
 syntax on
 set nocompatible
 set laststatus=2
